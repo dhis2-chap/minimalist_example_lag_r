@@ -41,31 +41,7 @@ cut_top_rows <- function(df, int_remove_rows){
 #cut_top_rows(df, 2)
 
 fill_top_rows_from_historic_last_rows <- function(feature, lag, future_df, historic_df){
-  #for(row_index in 1:lag){
-  #  future_df[row_index, get_lagged_col_name(feature, lag)] <- historic_df[nrow(historic_df) - lag + row_index, feature]
-  #}
-  
   future_df[1:lag, get_lagged_col_name(feature, lag)] <- historic_df[(nrow(historic_df)-lag + 1):nrow(historic_df), feature]
-  
   return(future_df)
 }
-
-
-
-#testing fill_top...
-df <- read.csv("C:\\Users\\Halvard\\Documents\\GitHub\\minimalist_multiregion_r\\input\\trainData.csv")
-print(df)
-df_future = read.csv("C:\\Users\\Halvard\\Documents\\GitHub\\minimalist_multiregion_r\\input\\futureClimateData.csv")
-print(df_future)
-
-X = df_future[,c('rainfall', 'mean_temperature')]
-#create_lagged_feature(X, 'mean_temperature', 1)
-X <- create_lagged_feature(X, 'rainfall', 2)$df
-#fill_top_rows_from_historic_last_rows('mean_temperature', 1, X, df)
-X <- fill_top_rows_from_historic_last_rows('rainfall', 1, X, df)
-X <- fill_top_rows_from_historic_last_rows('rainfall', 2, X, df)
-X
-
-X[1:1, get_lagged_col_name("rainfall", 1)] <- df[(nrow(df)-1 + 1):nrow(df), "rainfall"]
-
 
