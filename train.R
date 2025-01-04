@@ -2,7 +2,7 @@
 source("utils.R")
 
 train_chap <- function(csv_fn, model_fn) {
-  dataframe_list <- get_df_per_location(csv_fn) #from utils
+  dataframe_list <- get_df_per_location(csv_fn)
   
   models <- list()
   for (location in names(dataframe_list)){
