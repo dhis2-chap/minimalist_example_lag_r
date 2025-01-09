@@ -13,15 +13,20 @@ get_lagged_col_name <- function(feature, lag){
 shift <- function(v, lag){
   # v is a vector and lag is an int indicating how many places to shift
   stopifnot(length(v) > lag)
-  v <- c(tail(v, lag), v[1:(length(v) - lag)])
+  v <- c(rep(NA, lag), v[1:(length(v) - lag)])
   return(v)
 }
 
-create_lagged_feature <- function(df, feature, num_lags){
-  lag_features <- c()
-  for(lag in 1:(num_lags)){
-    lag_features <- append(lag_features, get_lagged_col_name(feature, lag))
-    df[tail(lag_features, 1)] <- shift(df[[feature]], lag) #use [[]] to get a vector for the given column
+create_lagged_feature <- function(df, feature, num_lags, include_all = TRUE){
+  if (include_all){
+    lag_features <- c()
+    for(lag in 1:(num_lags)){
+      lag_features <- append(lag_features, get_lagged_col_name(feature, lag))
+      df[tail(lag_features, 1)] <- shift(df[[feature]], lag) #use [[]] to get a vector for the given column
+    }
+  } else{
+    lag_features <- c(get_lagged_col_name(feature, num_lags))
+    df[tail(lag_features, 1)] <- shift(df[[feature]], num_lags)
   }
   return(list(df = df, lag_features = lag_features))
 }

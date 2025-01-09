@@ -15,8 +15,7 @@ For details on code files and data, please consult the models in "minimalist_exa
 ## Helper functions in utils.R 
 They are mostly the same as in "minimalist_example_lag", only translated to R. 
 Explanations for the python code is in the repository "chap_model_dev_toolkit".
-The only function which is changed from the python code is "create_lagged_feature" which in R removes the optional fourth argument for a "source_df".
-This is only because it was unnenessary for the current example.
+The only function which is changed from the python code is "create_lagged_feature" which in R removes the optional fourth argument for a "source_df" and added a boolean variable which determins if we make all lags up to the provided lag or only that lag. 
 
 ## Data for training and prediction
 The training data in "trainData.csv" is the same as in "minimalist_multiregion_r" and the future data is changed to:
