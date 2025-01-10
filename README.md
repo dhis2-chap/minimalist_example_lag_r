@@ -59,8 +59,8 @@ for (location in names(future_per_location)){
     X <- df[, c("rainfall", "mean_temperature"), drop = FALSE]
     X <- create_lagged_feature(X, "mean_temperature", 1)
     X <- create_lagged_feature(X, "rainfall", 1)
-    X <- fill_top_rows_from_historic_last_rows("mean_temperature", 1, X, historic_df)
-    X <- fill_top_rows_from_historic_last_rows("rainfall", 1, X, historic_df)
+    X <- fill_top_rows_from_historic_last_rows(X, historic_df, "mean_temperature", 1)
+    X <- fill_top_rows_from_historic_last_rows(X, historic_df, "rainfall", 1)
     
     last_disease_col <- get_lagged_col_name("disease_cases", 1)
     X[last_disease_col] <- NA
