@@ -13,8 +13,8 @@ predict_chap <- function(model_fn, historic_data_fn, future_climatedata_fn, pred
     model <- models[[location]]
     
     X <- df[, c("rainfall", "mean_temperature"), drop = FALSE]
-    X <- create_lagged_feature(X, "mean_temperature", 1)$df
-    X <- create_lagged_feature(X, "rainfall", 1)$df
+    X <- create_lagged_feature(X, "mean_temperature", 1)
+    X <- create_lagged_feature(X, "rainfall", 1)
     X <- fill_top_rows_from_historic_last_rows("mean_temperature", 1, X, historic_df)
     X <- fill_top_rows_from_historic_last_rows("rainfall", 1, X, historic_df)
     

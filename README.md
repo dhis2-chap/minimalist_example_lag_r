@@ -35,9 +35,9 @@ This example builds on the code from "minimalist_multiregion_r" and the main cha
 ```
 train_single_region <- function(df, location){
   df$disease_cases[is.na(df$disease_cases)] <- 0 # set NaNs to zero (not a good solution, just for the example to work)
-  df <- create_lagged_feature(df, "mean_temperature", 1)$df
-  df <- create_lagged_feature(df, "rainfall", 1)$df
-  df <- create_lagged_feature(df, "disease_cases", 1)$df
+  df <- create_lagged_feature(df, "mean_temperature", 1)
+  df <- create_lagged_feature(df, "rainfall", 1)
+  df <- create_lagged_feature(df, "disease_cases", 1)
   df <- cut_top_rows(df, 1)
   
   model <- lm(disease_cases ~ rainfall + rainfall_1 + mean_temperature + 
@@ -57,8 +57,8 @@ for (location in names(future_per_location)){
     model <- models[[location]]
     
     X <- df[, c("rainfall", "mean_temperature"), drop = FALSE]
-    X <- create_lagged_feature(X, "mean_temperature", 1)$df
-    X <- create_lagged_feature(X, "rainfall", 1)$df
+    X <- create_lagged_feature(X, "mean_temperature", 1)
+    X <- create_lagged_feature(X, "rainfall", 1)
     X <- fill_top_rows_from_historic_last_rows("mean_temperature", 1, X, historic_df)
     X <- fill_top_rows_from_historic_last_rows("rainfall", 1, X, historic_df)
     

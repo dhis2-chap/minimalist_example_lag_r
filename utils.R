@@ -28,7 +28,7 @@ create_lagged_feature <- function(df, feature, num_lags, include_all = TRUE){
     lag_features <- c(get_lagged_col_name(feature, num_lags))
     df[tail(lag_features, 1)] <- shift(df[[feature]], num_lags)
   }
-  return(list(df = df, lag_features = lag_features))
+  return(df)
 }
 
 cut_top_rows <- function(df, int_remove_rows){

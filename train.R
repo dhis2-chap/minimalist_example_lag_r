@@ -14,9 +14,9 @@ train_chap <- function(csv_fn, model_fn) {
 
 train_single_region <- function(df, location){
   df$disease_cases[is.na(df$disease_cases)] <- 0 # set NaNs to zero (not a good solution, just for the example to work)
-  df <- create_lagged_feature(df, "mean_temperature", 1)$df
-  df <- create_lagged_feature(df, "rainfall", 1)$df
-  df <- create_lagged_feature(df, "disease_cases", 1)$df
+  df <- create_lagged_feature(df, "mean_temperature", 1)
+  df <- create_lagged_feature(df, "rainfall", 1)
+  df <- create_lagged_feature(df, "disease_cases", 1)
   df <- cut_top_rows(df, 1)
   
   model <- lm(disease_cases ~ rainfall + rainfall_1 + mean_temperature + 
