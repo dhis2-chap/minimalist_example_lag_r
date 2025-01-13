@@ -18,16 +18,8 @@ Explanations for the python code is in the repository "chap_model_dev_toolkit".
 The only function which is changed from the python code is "create_lagged_feature" which in R removes the optional fourth argument for a "source_df" and added a boolean variable which determins if we make all lags up to the provided lag or only that lag. 
 
 ## Data for training and prediction
-The training data in "trainData.csv" is the same as in "minimalist_multiregion_r" and the future data is now:
-```csv
-time_period,rainfall,mean_temperature,location
-2023-08,20,20,loc1
-2023-09,30,20,loc1
-2023-10,30,30,loc1
-2023-08,20,20,loc2
-2023-09,30,20,loc2
-2023-10,30,30,loc2
-```
+The training data now has an extra row for each location compared to the multiregion example. The future climate data is unchanged.
+
 
 ## Changes in the code
 This example builds on the code from "minimalist_multiregion_r" and the main changes are:
