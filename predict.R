@@ -11,12 +11,13 @@ predict_chap <- function(model_fn, historic_data_fn, future_climatedata_fn, pred
     df <- future_per_location[[location]]
     historic_df <- historic_per_location[[location]]
     model <- models[[location]]
-    
-    X <- df[, c("rainfall", "mean_temperature"), drop = FALSE]
-    X <- create_lagged_feature(X, "mean_temperature", 1)
-    X <- create_lagged_feature(X, "rainfall", 1)
-    X <- fill_top_rows_from_historic_last_rows(X, historic_df, "mean_temperature", 1)
-    X <- fill_top_rows_from_historic_last_rows(X, historic_df, "rainfall", 1)
+
+    df$disease_cases <- NA #makes the column so we can rowbind future and historic
+
+    df_all <- rbind(historic_df, df)
+    df_all <- create_lagged_feature(df_all, "mean_temperature", 1)
+    df_all <- create_lagged_feature(df_all, "rainfall", 1)
+    X <- df_all[(nrow(historic_df) + 1):nrow(df_all), c("rainfall", "rainfall_1", "mean_temperature", "mean_temperature_1"), drop = FALSE]
     
     last_disease_col <- get_lagged_col_name("disease_cases", 1)
     X[last_disease_col] <- NA
@@ -51,3 +52,7 @@ if (length(args) == 4) {
   
   predict_chap(model_fn, historic_data_fn, future_climatedata_fn, predictions_fn)
 }
+
+
+
+

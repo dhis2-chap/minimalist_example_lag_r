@@ -41,18 +41,19 @@ train_single_region <- function(df, location){
 }
 ```
 
-* The predictions also include lagged covariates, so we create the lagged coavriates as in the training. Instead of removing the first row we now fill the first lagged values with the last values in the training data. This is done by the function "fill_top_rows_from_historic_last_rows". The lagged values for "disease_cases" need the previous prediction for the "disease_cases". Thus, the predictions are done one at a time and the current prediction is used as a covariate in the next prediction. This is shown in the code below:
+* When predicting for a location we start by row-binding the historic and future dataframes. We make a columns of NA's for disease_cases in the future dataframe so they match each other. Then we create the lagged coavriates as in the training and seperate the rows for the future time points into their own dataframe X, which now also has the lagged values. The lagged values for "disease_cases" need the previous prediction for the "disease_cases". Thus, the predictions are done one at a time and the current prediction is used as a covariate in the next prediction. This is shown in the code below:
 ```
 for (location in names(future_per_location)){
     df <- future_per_location[[location]]
     historic_df <- historic_per_location[[location]]
     model <- models[[location]]
     
-    X <- df[, c("rainfall", "mean_temperature"), drop = FALSE]
-    X <- create_lagged_feature(X, "mean_temperature", 1)
-    X <- create_lagged_feature(X, "rainfall", 1)
-    X <- fill_top_rows_from_historic_last_rows(X, historic_df, "mean_temperature", 1)
-    X <- fill_top_rows_from_historic_last_rows(X, historic_df, "rainfall", 1)
+    df$disease_cases <- NA #makes the column so we can rowbind future and historic
+
+    df_all <- rbind(historic_df, df)
+    df_all <- create_lagged_feature(df_all, "mean_temperature", 1)
+    df_all <- create_lagged_feature(df_all, "rainfall", 1)
+    X <- df_all[(nrow(historic_df) + 1):nrow(df_all), c("rainfall", "rainfall_1", "mean_temperature", "mean_temperature_1"), drop = FALSE]
     
     last_disease_col <- get_lagged_col_name("disease_cases", 1)
     X[last_disease_col] <- NA

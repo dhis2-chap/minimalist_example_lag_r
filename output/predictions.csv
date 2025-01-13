@@ -1,7 +1,7 @@
-"time_period","rainfall","mean_temperature","location","sample_0"
-"2023-07",20,20,"loc1",50
-"2023-08",30,20,"loc1",162.5
-"2023-09",30,30,"loc1",225
-"2023-07",20,20,"loc2",4000
-"2023-08",30,20,"loc2",6500
-"2023-09",30,30,"loc2",9000
+"time_period","rainfall","mean_temperature","location","disease_cases","sample_0"
+"2023-07",20,20,"loc1",NA,50
+"2023-08",30,20,"loc1",NA,162.5
+"2023-09",30,30,"loc1",NA,225
+"2023-07",20,20,"loc2",NA,4000
+"2023-08",30,20,"loc2",NA,6500
+"2023-09",30,30,"loc2",NA,9000
